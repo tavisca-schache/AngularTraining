@@ -1,0 +1,15 @@
+<table class="table table-striped table-bordered table-dark">
+    <thead>
+        <tr>
+            <th *ngFor="let h of headers">{{h}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let d of DataSource" (click)="onRowSelectedEvent(d)">
+            <td *ngFor="let h of headers">{{d[h]}}</td>
+            <td class="align-middle">
+                <input type="button" value="Delete" class="btn btn-danger" (click)="onDeleteRecordEvent(d)">
+            </td>
+        </tr>
+    </tbody>
+</table>

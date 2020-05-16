@@ -1,0 +1,5 @@
+<fieldset>
+<div *ngFor="let d of DataSource" name="Category">
+    <input type="radio" name="radiodrpdown" value="{{d}}" (click)="onSelectEvent(d)">{{d}}
+</div>
+</fieldset>

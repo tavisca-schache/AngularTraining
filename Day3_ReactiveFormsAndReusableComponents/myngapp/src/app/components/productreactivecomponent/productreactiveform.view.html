@@ -1,0 +1,54 @@
+<div class="container">
+    <form name="frmprd" [formGroup]='frmprd' (ngSubmit)='saveProduct()'>
+        <div class="form-group">
+            <label>Product Id</label>
+            <input type="text" name="ProductId" formControlName="ProductId" class="form-control" [ngClass]="{'is-invalid': frmprd.controls.ProductId.dirty && !frmprd.controls.ProductId.valid}">
+            <div class="alert alert-danger" *ngIf="frmprd.controls.ProductId.dirty && !frmprd.controls.ProductId.valid">
+                <p *ngIf="frmprd.controls.ProductId.errors.required">Product Id is rerequired</p>
+                <p *ngIf="frmprd.controls.ProductId.errors.minlength">Product Id must be 2 digits mimimum</p>
+                <p *ngIf="frmprd.controls.ProductId.errors.maxlength">Product Id must be 6 digits maximum</p>
+                <p *ngIf="frmprd.controls.ProductId.errors.pattern">Product Id must be a positive integer</p>
+                <p *ngIf="frmprd.controls.ProductId.errors.notunique">Product Id must be unique</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" name="ProductName" formControlName="ProductName" class="form-control" [ngClass]="{'is-invalid': frmprd.controls.ProductName.dirty && !frmprd.controls.ProductName.valid}">
+            <div class="alert alert-danger" *ngIf="frmprd.controls.ProductName.dirty && !frmprd.controls.ProductName.valid">
+                <p *ngIf="frmprd.controls.ProductName.errors.notvalidName">Product name is not valid</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input type="text" name="Price" formControlName="Price" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <!-- <select  name="Category" formControlName="Category" class="form-control">
+                <option *ngFor="let c of categories" value="{{c}}">{{c}}</option>
+            </select> -->
+            <app-dropdown-directive [DataSource]="categories" (onSelect)="onCatSelect($event)"></app-dropdown-directive>
+        </div>
+        <div class="form-group">
+            <input type="button" value="Clear" class="btn btn-warning" (click)="clear()" >
+            <input type="button" [disabled]="!frmprd.valid" value="Save" class="btn btn-success" (click)="saveProduct()" >
+        </div>
+    </form>
+</div>
+<div class="container">
+    <form name="frmtblop">
+        <div class="form-group">
+            <fieldset>
+                <input type="radio" name="sorting" (click)="sort()">
+                <label>Sort</label>&nbsp;&nbsp;
+                <input type="radio" name="sorting" (click)="reverse()">
+                <label>Reverse</label>
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <input type="text" name=search [(ngModel)]="searchStr">&nbsp;&nbsp;
+            <input type="button" value="Search" class="btn btn-warning" (click)="search(searchStr)" >
+        </div>
+    </form>
+    <app-table-directive [DataSource]="products" (onRowSelected)=getSelectedProduct($event) (onDeleteRecord)="deleteProduct($event)"></app-table-directive>
+</div>
